@@ -70,9 +70,9 @@ public class MainActivity extends FragmentActivity
 
             // Create fragment and give it an argument for the selected article
             ArticleFragment newFragment = new ArticleFragment();
-            Bundle args = new Bundle();
-            args.putInt(ArticleFragment.ARG_POSITION, position);
-            newFragment.setArguments(args);
+            //Bundle args = new Bundle();
+            //args.putInt(ArticleFragment.ARG_POSITION, position);
+            //newFragment.setArguments(args);
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
             // Replace whatever is in the fragment_container view with this fragment,

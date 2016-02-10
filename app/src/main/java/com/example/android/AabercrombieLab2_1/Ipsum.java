@@ -20,6 +20,7 @@ public class Ipsum {
 
     String mHeadline;
     String mArticle;
+    int mPosition;
 
     /**
      * Getter for mArticle
@@ -51,6 +52,22 @@ public class Ipsum {
      */
     public void setmHeadline(String mHeadline) {
         this.mHeadline = mHeadline;
+    }
+
+    /**
+     * getter for mPosition
+     * @return mPosition
+     */
+    public int getmPosition() {
+        return mPosition;
+    }
+
+    /**
+     * setter for mPosition
+     * @param mPosition
+     */
+    public void setmPosition(int mPosition) {
+        this.mPosition = mPosition;
     }
 
 }
