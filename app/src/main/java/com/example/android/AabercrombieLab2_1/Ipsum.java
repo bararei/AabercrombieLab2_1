@@ -20,7 +20,6 @@ public class Ipsum {
 
     String mHeadline;
     String mArticle;
-    int mPosition;
 
     /**
      * Getter for mArticle

@@ -34,7 +34,7 @@ public class HeadlinesFragment extends ListFragment {
     // The container Activity must implement this interface so the frag can deliver messages
     public interface OnHeadlineSelectedListener {
         /** Called by HeadlinesFragment when a list item is selected */
-        public void onArticleSelected();
+        public void onArticleSelected(int position);
     }
 
     @Override
@@ -82,7 +82,7 @@ public class HeadlinesFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         // Notify the parent activity of selected item
-        mCallback.onArticleSelected();
+        mCallback.onArticleSelected(position);
         IpsumSingleton.get(getActivity()).setmPosition(position);
         mPosition = position;
         

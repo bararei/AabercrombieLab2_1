@@ -15,12 +15,16 @@
  */
 package com.example.android.AabercrombieLab2_1;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 
 public class MainActivity extends FragmentActivity 
         implements HeadlinesFragment.OnHeadlineSelectedListener {
+
+    ArticleFragment newFragment;
+    ArticleFragment articleFrag;
 
     /** Called when the activity is first created. */
     @Override
@@ -52,27 +56,24 @@ public class MainActivity extends FragmentActivity
         }
     }
 
-    public void onArticleSelected() {
+    public void onArticleSelected(int position) {
         // The user selected the headline of an article from the HeadlinesFragment
 
         // Capture the article fragment from the activity layout
-        ArticleFragment articleFrag = (ArticleFragment)
+        articleFrag = (ArticleFragment)
                 getSupportFragmentManager().findFragmentById(R.id.article_fragment);
 
         if (articleFrag != null) {
             // If article frag is available, we're in two-pane layout...
 
             // Call a method in the ArticleFragment to update its content
-           // articleFrag.updateArticleView(position);
+           articleFrag.updateArticleView(position);
 
         } else {
             // If the frag is not available, we're in the one-pane layout and must swap frags...
 
             // Create fragment and give it an argument for the selected article
-            ArticleFragment newFragment = new ArticleFragment();
-            //Bundle args = new Bundle();
-            //args.putInt(ArticleFragment.ARG_POSITION, position);
-            //newFragment.setArguments(args);
+            newFragment = new ArticleFragment();
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
             // Replace whatever is in the fragment_container view with this fragment,
@@ -83,5 +84,18 @@ public class MainActivity extends FragmentActivity
             // Commit the transaction
             transaction.commit();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        if(articleFrag != null) {
+            articleFrag.onBackPressed();
+        } else {
+            newFragment.onBackPressed();
+        }
+
+
     }
 }

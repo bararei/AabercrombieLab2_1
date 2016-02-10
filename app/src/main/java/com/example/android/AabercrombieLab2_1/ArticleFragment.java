@@ -20,29 +20,43 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 
 public class ArticleFragment extends Fragment {
     final static String ARG_POSITION = "position";
     int mCurrentPosition = -1;
     ArrayList<Ipsum> mArticles;
+    private Button mCancelBtn;
+    private Button mSaveBtn;
+    private String sCancelText;
+    private String sSaveText;
+    private EditText article;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, 
         Bundle savedInstanceState) {
 
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.article_view, container, false);
         // If activity recreated (such as from screen rotate), restore
         // the previous article selection set by onSaveInstanceState().
         // This is primarily necessary when in the two-pane layout.
-        /*if (savedInstanceState != null) {
+        if (savedInstanceState != null) {
             mCurrentPosition = savedInstanceState.getInt(ARG_POSITION);
-        }*/
+        }
 
-        mCurrentPosition = IpsumSingleton.get(getActivity()).getmPosition();
+//        mCurrentPosition = IpsumSingleton.get(getActivity()).getmPosition();
 
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.article_view, container, false);
+        mArticles = IpsumSingleton.get(getActivity()).getIpsumArrayList();
+
+
+
+        return view;
     }
 
     @Override
@@ -62,16 +76,42 @@ public class ArticleFragment extends Fragment {
             updateArticleView(mCurrentPosition);
         } */
 
-        updateArticleView(IpsumSingleton.get(getActivity()).getmPosition());
+        mCurrentPosition = IpsumSingleton.get(getActivity()).getmPosition();
+        updateArticleView(mCurrentPosition);
     }
 
     public void updateArticleView(int position) {
-        TextView article = (TextView) getActivity().findViewById(R.id.article);
 
-        mArticles = IpsumSingleton.get(getActivity()).getIpsumArrayList();
+        article = (EditText) getActivity().findViewById(R.id.article);
+        mCancelBtn = (Button) getActivity().findViewById(R.id.cancelBtn);
+        mSaveBtn = (Button) getActivity().findViewById(R.id.saveBtn);
+
         String stringTest = mArticles.get(position).getmArticle();
         article.setText(stringTest);
         mCurrentPosition = position;
+
+        mCancelBtn.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+
+                sCancelText = mArticles.get(mCurrentPosition).getmArticle();
+                article.setText(sCancelText);
+
+            }
+        });
+
+        mSaveBtn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Ipsum ipsum = IpsumSingleton.get(getActivity()).getIpsumArrayList().get(mCurrentPosition);
+                sSaveText = article.getText().toString();
+                ipsum.setmArticle(sSaveText);
+                Toast.makeText(getActivity(), "Your changes have been saved",Toast.LENGTH_SHORT).show();
+
+            }
+        });
     }
 
     @Override
@@ -80,5 +120,11 @@ public class ArticleFragment extends Fragment {
 
         // Save the current article selection in case we need to recreate the fragment
         outState.putInt(ARG_POSITION, mCurrentPosition);
+    }
+
+    public void onBackPressed() {
+        Ipsum ipsum = IpsumSingleton.get(getActivity()).getIpsumArrayList().get(mCurrentPosition);
+        sSaveText = article.getText().toString();
+        ipsum.setmArticle(sSaveText);
     }
 }
