@@ -22,14 +22,19 @@ import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import java.util.ArrayList;
+import android.widget.ArrayAdapter;
 
 public class HeadlinesFragment extends ListFragment {
+
+    private ArrayList<Ipsum> mHeadlines;
     OnHeadlineSelectedListener mCallback;
+    int mPosition;
 
     // The container Activity must implement this interface so the frag can deliver messages
     public interface OnHeadlineSelectedListener {
         /** Called by HeadlinesFragment when a list item is selected */
-        public void onArticleSelected(int position);
+        public void onArticleSelected();
     }
 
     @Override
@@ -40,8 +45,13 @@ public class HeadlinesFragment extends ListFragment {
         int layout = Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ?
                 android.R.layout.simple_list_item_activated_1 : android.R.layout.simple_list_item_1;
 
-        // Create an array adapter for the list view, using the Ipsum headlines array
-        setListAdapter(new ArrayAdapter<String>(getActivity(), layout, Ipsum.Headlines));
+        mHeadlines = IpsumSingleton.get(getActivity()).getIpsumArrayList();
+
+        // Create an array adapter for the list view, using the Ipsum Singleton
+        setListAdapter(new ArrayAdapter<Ipsum>(getActivity(), layout, mHeadlines));
+
+        //CustomAdapter adapter = new CustomAdapter(mHeadlines);
+        //setListAdapter(adapter);
     }
 
     @Override
@@ -72,9 +82,13 @@ public class HeadlinesFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         // Notify the parent activity of selected item
-        mCallback.onArticleSelected(position);
+        mCallback.onArticleSelected();
+        IpsumSingleton.get(getActivity()).setmPosition(position);
+        mPosition = position;
         
         // Set the item as checked to be highlighted when in two-pane layout
         getListView().setItemChecked(position, true);
     }
+
+
 }

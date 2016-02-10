@@ -11,11 +11,12 @@ public class IpsumSingleton {
     private static IpsumSingleton sIpsumSingleton;
 
     private Context mAppContext;
-
-    private ArrayList<Ipsum> ipsumArrayList;
+    private int mPosition;
+    private ArrayList<Ipsum> ipsumArrayList = new ArrayList<>();
 
     private IpsumSingleton(Context appContext) {
         mAppContext = appContext;
+        mPosition = 0;
 
         //populate with headlines and article information
         Ipsum ipsum1 = new Ipsum();
@@ -39,6 +40,22 @@ public class IpsumSingleton {
 
     public ArrayList<Ipsum> getIpsumArrayList() {
         return ipsumArrayList;
+    }
+
+    /**
+     * getter for mPosition
+     * @return mPosition
+     */
+    public int getmPosition() {
+        return mPosition;
+    }
+
+    /**
+     * setter for mPosition
+     * @param mPosition
+     */
+    public void setmPosition(int mPosition) {
+        this.mPosition = mPosition;
     }
 
 }

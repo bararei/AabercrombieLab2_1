@@ -55,19 +55,13 @@ public class Ipsum {
     }
 
     /**
-     * getter for mPosition
-     * @return mPosition
+     * toString method
      */
-    public int getmPosition() {
-        return mPosition;
+    @Override
+    public String toString() {
+        return mHeadline;
     }
 
-    /**
-     * setter for mPosition
-     * @param mPosition
-     */
-    public void setmPosition(int mPosition) {
-        this.mPosition = mPosition;
-    }
+
 
 }

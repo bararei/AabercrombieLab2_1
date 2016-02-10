@@ -52,7 +52,7 @@ public class MainActivity extends FragmentActivity
         }
     }
 
-    public void onArticleSelected(int position) {
+    public void onArticleSelected() {
         // The user selected the headline of an article from the HeadlinesFragment
 
         // Capture the article fragment from the activity layout
@@ -63,7 +63,7 @@ public class MainActivity extends FragmentActivity
             // If article frag is available, we're in two-pane layout...
 
             // Call a method in the ArticleFragment to update its content
-            articleFrag.updateArticleView(position);
+           // articleFrag.updateArticleView(position);
 
         } else {
             // If the frag is not available, we're in the one-pane layout and must swap frags...
